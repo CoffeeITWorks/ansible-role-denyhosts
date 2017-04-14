@@ -1,23 +1,28 @@
 ---
-- name: Install denyhosts
+- name: Ensure that denyhosts is installed
   tags: denyhosts
-  yum: name=denyhosts
-       enablerepo=epel
-       state=present
-       update_cache=yes
+  yum:
+    enablerepo: epel
+    name: denyhosts
+    state: present
+    update_cache: yes
   register: denyhosts_yum
 
 - block:
-    - name: Configure denyhosts.conf
-      template: src=denyhosts.conf.j2
-                dest=/etc/denyhosts.conf
-                owner=root
-                group=root
-                mode=0600
+    - name: Apply denyhosts configuration
+      template:
+        src: denyhosts.conf.j2
+        dest: /etc/denyhosts.conf
+        owner: root
+        group: root
+        mode: 0600
       notify: restart denyhosts
-    - name: Enable and start denyhosts
-      service: name=denyhosts
-               enabled=yes
-               state=started
+
+    - name: Start the denyhosts service and enable on boot
+      service:
+        enabled: yes
+        name: denyhosts
+        state: started
   tags: denyhosts
   when: denyhosts_yum|success
+...

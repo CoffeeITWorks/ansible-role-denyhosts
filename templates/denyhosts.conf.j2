@@ -9,11 +9,7 @@
 # argument
 #
 # Redhat or Fedora Core:
-{% if denyhosts_secure_log is defined %}
 SECURE_LOG = {{ denyhosts_secure_log }}
-{% else %}
-SECURE_LOG = /var/log/secure
-{% endif %}
 #
 # Mandrake, FreeBSD or OpenBSD: 
 #SECURE_LOG = /var/log/auth.log
@@ -37,11 +33,7 @@ SECURE_LOG = /var/log/secure
 # HOSTS_DENY: the file which contains restricted host access information
 #
 # Most operating systems:
-{% if denyhosts_hosts_deny is defined %}
 HOSTS_DENY = {{ denyhosts_hosts_deny }}
-{% else %}
-HOSTS_DENY = /etc/hosts.deny
-{% endif %}
 #
 # Some BSD (FreeBSD) Unixes:
 #HOSTS_DENY = /etc/hosts.allow
@@ -76,11 +68,7 @@ HOSTS_DENY = /etc/hosts.deny
 # For the default Fedora install, we want timestamping but no
 # expiration (at least by default) so this is deliberately set high.
 # Adjust to taste.
-{% if denyhosts_purge_deny is defined %}
 PURGE_DENY = {{ denyhosts_purge_deny }}
-{% else %}
-PURGE_DENY = 4w
-{% endif %}
 #######################################################################
 
 #######################################################################
@@ -90,11 +78,7 @@ PURGE_DENY = 4w
 # Setting this parameter to 0 (the default) disables this feature.
 #
 # default: a denied host can be purged/re-added indefinitely
-{% if denyhosts_purge_threshold is defined %}
 PURGE_THRESHOLD = {{ denyhosts_purge_threshold }}
-{% else %}
-#PURGE_THRESHOLD = 0
-{% endif %}
 #
 # a denied host will be purged at most 2 times. 
 #PURGE_THRESHOLD = 2 
@@ -113,11 +97,7 @@ PURGE_THRESHOLD = {{ denyhosts_purge_threshold }}
 # To block all services for the offending host:
 #BLOCK_SERVICE = ALL
 # To block only sshd:
-{% if denyhosts_block_service is defined %}
 BLOCK_SERVICE  = {{ denyhosts_block_service }}
-{% else %}
-BLOCK_SERVICE  = sshd
-{% endif %}
 # To only record the offending host and nothing else (if using
 # an auxilary file to list the hosts).  Refer to: 
 # http://denyhost.sourceforge.net/faq.html#aux
@@ -132,11 +112,7 @@ BLOCK_SERVICE  = sshd
 # attempts has exceeded this value.  This value applies to invalid
 # user login attempts (eg. non-existent user accounts)
 #
-{% if denyhosts_deny_threshold_invalid is defined %}
 DENY_THRESHOLD_INVALID = {{ denyhosts_deny_threshold_invalid }}
-{% else %}
-DENY_THRESHOLD_INVALID = 5
-{% endif %}
 #
 #######################################################################
 
@@ -147,11 +123,7 @@ DENY_THRESHOLD_INVALID = 5
 # user login attempts (eg. user accounts that exist in /etc/passwd) except
 # for the "root" user
 #
-{% if denyhosts_deny_threshold_valid is defined %}
 DENY_THRESHOLD_VALID = {{ denyhosts_deny_threshold_valid }}
-{% else %}
-DENY_THRESHOLD_VALID = 10
-{% endif %}
 #
 #######################################################################
 
@@ -161,11 +133,7 @@ DENY_THRESHOLD_VALID = 10
 # login attempts has exceeded this value.  This value applies to 
 # "root" user login attempts only.
 #
-{% if denyhosts_deny_threshold_root is defined %}
 DENY_THRESHOLD_ROOT = {{ denyhosts_deny_threshold_root }}
-{% else %}
-DENY_THRESHOLD_ROOT = 1
-{% endif %}
 #
 #######################################################################
 
@@ -176,11 +144,7 @@ DENY_THRESHOLD_ROOT = 1
 # login attempts has exceeded this value.  This value applies to 
 # usernames that appear in the WORK_DIR/restricted-usernames file only.
 #
-{% if denyhosts_deny_threshold_restricted is defined %}
 DENY_THRESHOLD_RESTRICTED = {{ denyhosts_deny_threshold_restricted }}
-{% else %}
-DENY_THRESHOLD_RESTRICTED = 1
-{% endif %}
 #
 #######################################################################
 
@@ -193,11 +157,7 @@ DENY_THRESHOLD_RESTRICTED = 1
 # Note: it is recommended that you use an absolute pathname
 # for this value (eg. /home/foo/denyhost/data)
 #
-{% if denyhosts_work_dir is defined %}
 WORK_DIR = {{ denyhosts_work_dir }}
-{% else %}
-WORK_DIR = /var/lib/denyhosts
-{% endif %}
 #
 #######################################################################
 
@@ -209,11 +169,7 @@ WORK_DIR = /var/lib/denyhosts
 # Note: it is recommended that you use an absolute pathname
 # for this value (eg. /etc or /usr/local/etc)
 #
-{% if denyhosts_etc_dir is defined %}
 ETC_DIR = {{ denyhosts_etc_dir }}
-{% else %}
-ETC_DIR = /etc
-{% endif %}
 #
 #######################################################################
 
@@ -229,15 +185,7 @@ ETC_DIR = /etc
 # from allowed-hosts will not be reported.  All suspicious logins from 
 # ip addresses that are not in allowed-hosts will always be reported.
 #
-{% if denyhosts_suspicious_login_report_allowed_hosts is defined %}
-{%   if denyhosts_suspicious_login_report_allowed_hosts %}
-SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS=YES
-{%   else %}
-SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS=NO
-{%   endif %}
-{% else %}
-SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS=YES
-{% endif %}
+SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS={{ denyhosts_suspicious_login_report_allowed_hosts|upper }}
 ######################################################################
 
 ######################################################################
@@ -249,15 +197,7 @@ SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS=YES
 # the corresponding hostname will be looked up and reported as well
 # (if available).
 #
-{% if denyhosts_hostname_lookup is defined %}
-{%   if denyhosts_hostname_lookup %}
-HOSTNAME_LOOKUP=YES
-{%   else %}
-HOSTNAME_LOOKUP=NO
-{%   endif %}
-{% else %}
-HOSTNAME_LOOKUP=NO
-{% endif %}
+HOSTNAME_LOOKUP={{ denyhosts_hostname_lookup|upper }}
 #
 ######################################################################
 
@@ -273,11 +213,7 @@ HOSTNAME_LOOKUP=NO
 # running at a time.
 #
 # Redhat/Fedora:
-{% if denyhosts_lock_file is defined %}
 LOCK_FILE = {{ denyhosts_lock_file }}
-{% else %}
-LOCK_FILE = /var/lock/subsys/denyhosts
-{% endif %}
 #
 # Debian
 #LOCK_FILE = /var/run/denyhosts.pid
@@ -375,11 +311,7 @@ PF_TABLE = {{ denyhosts_pf_table }}
 # Multiple email addresses can be delimited by a comma, eg:
 # ADMIN_EMAIL = foo@bar.com, bar@foo.com, etc@foobar.com
 #
-{% if denyhosts_admin_email is defined %}
 ADMIN_EMAIL = {{ denyhosts_admin_email }}
-{% else %}
-ADMIN_EMAIL = root@localhost
-{% endif %}
 #
 #######################################################################
 
@@ -390,16 +322,8 @@ ADMIN_EMAIL = root@localhost
 # email server address (SMTP_HOST) and the server port (SMTP_PORT)
 # 
 #
-{% if denyhosts_smtp_host is defined %}
 SMTP_HOST = {{ denyhosts_smtp_host }}
-{% else %}
-SMTP_HOST = localhost
-{% endif %}
-{% if denyhosts_smtp_port is defined %}
 SMTP_PORT = {{ denyhosts_smtp_port }}
-{% else %}
-SMTP_PORT = 25
-{% endif %}
 #
 #######################################################################
 
@@ -426,11 +350,7 @@ SMTP_PASSWORD={{ denyhosts_smtp_password }}
 # SMTP_FROM: you can specify the "From:" address in messages sent
 # from DenyHosts when it reports thwarted abuse attempts
 #
-{% if denyhosts_smtp_from is defined %}
 SMTP_FROM = {{ denyhosts_smtp_from }}
-{% else %}
-SMTP_FROM = DenyHosts <nobody@localhost>
-{% endif %}
 #
 #######################################################################
 
@@ -438,11 +358,7 @@ SMTP_FROM = DenyHosts <nobody@localhost>
 #
 # SMTP_SUBJECT: you can specify the "Subject:" of messages sent
 # by DenyHosts when it reports thwarted abuse attempts
-{% if denyhosts_smtp_subject is defined %}
 SMTP_SUBJECT = {{ denyhosts_smtp_subject }}
-{% else %}
-SMTP_SUBJECT = DenyHosts Report from $[HOSTNAME]
-{% endif %}
 #
 ######################################################################
 
@@ -472,11 +388,7 @@ SMTP_DATE_FORMAT = {{ denyhosts_smtp_date_format }}
 # will be sent to syslog (syslog must be present on your system).
 # The default is: NO
 #
-{% if denyhosts_syslog_report is defined %}
-SYSLOG_REPORT={{ denyhosts_syslog_report }}
-{% else %}
-#SYSLOG_REPORT=NO
-{% endif %}
+SYSLOG_REPORT={{ denyhosts_syslog_report|upper }}
 #
 #SYSLOG_REPORT=YES
 #
@@ -492,15 +404,7 @@ SYSLOG_REPORT={{ denyhosts_syslog_report }}
 # and sshd sometimes log hostnames in addition to ip addresses
 # then you may wish to specify this option.
 # 
-{% if denyhosts_allowed_hosts_hostname_lookup is defined %}
-{%   if denyhosts_allowed_hosts_hostname_lookup %}
-ALLOWED_HOSTS_HOSTNAME_LOOKUP=YES
-{%   else %}
-ALLOWED_HOSTS_HOSTNAME_LOOKUP=NO
-{%   endif %}
-{% else %}
-ALLOWED_HOSTS_HOSTNAME_LOOKUP=NO
-{% endif %}
+ALLOWED_HOSTS_HOSTNAME_LOOKUP={{ denyhosts_allowed_hosts_hostname_lookup|upper }}
 #
 ######################################################################
 
@@ -517,11 +421,7 @@ ALLOWED_HOSTS_HOSTNAME_LOOKUP=NO
 # for details on specifying this value or for complete details 
 # refer to:  http://denyhost.sourceforge.net/faq.html#timespec
 #
-{% if denyhosts_age_reset_valid is defined %}
 AGE_RESET_VALID={{ denyhosts_age_reset_valid }}
-{% else %}
-AGE_RESET_VALID=5d
-{% endif %}
 #
 ######################################################################
 
@@ -537,11 +437,7 @@ AGE_RESET_VALID=5d
 # for details on specifying this value or for complete details 
 # refer to:  http://denyhost.sourceforge.net/faq.html#timespec
 #
-{% if denyhosts_age_reset_root is defined %}
 AGE_RESET_ROOT={{ denyhosts_age_reset_root }}
-{% else %}
-AGE_RESET_ROOT=25d
-{% endif %}
 #
 ######################################################################
 
@@ -557,11 +453,7 @@ AGE_RESET_ROOT=25d
 # for details on specifying this value or for complete details 
 # refer to:  http://denyhost.sourceforge.net/faq.html#timespec
 #
-{% if denyhosts_age_reset_restricted is defined %}
 AGE_RESET_RESTRICTED={{ denyhosts_age_reset_restricted }}
-{% else %}
-AGE_RESET_RESTRICTED=25d
-{% endif %}
 #
 ######################################################################
 
@@ -578,11 +470,7 @@ AGE_RESET_RESTRICTED=25d
 # for details on specifying this value or for complete details 
 # refer to:  http://denyhost.sourceforge.net/faq.html#timespec
 #
-{% if denyhosts_age_reset_invalid is defined %}
 AGE_RESET_INVALID={{ denyhosts_age_reset_invalid }}
-{% else %}
-AGE_RESET_INVALID=10d
-{% endif %}
 #
 ######################################################################
 
@@ -595,11 +483,7 @@ AGE_RESET_INVALID=10d
 #
 # The default is RESET_ON_SUCCESS = no
 #
-{% if denyhosts_reset_on_success is defined %}
-RESET_ON_SUCCESS = {{ denyhosts_reset_on_success }}
-{% else %}
-#RESET_ON_SUCCESS = yes
-{% endif %}
+RESET_ON_SUCCESS = {{ denyhosts_reset_on_success|upper }}
 #
 #####################################################################
 
@@ -676,11 +560,7 @@ USERDEF_FAILED_ENTRY_REGEX={{ denyhosts_userdef_failed_entry_regex }}
 # this is the logfile that DenyHosts uses to report its status.
 # To disable logging, leave blank.  (default is: /var/log/denyhosts)
 #
-{% if denyhosts_daemon_log is defined %}
 DAEMON_LOG = {{ denyhosts_daemon_log }}
-{% else %}
-DAEMON_LOG = /var/log/denyhosts
-{% endif %}
 #
 # disable logging:
 #DAEMON_LOG = 
@@ -697,11 +577,7 @@ DAEMON_LOG = /var/log/denyhosts
 # for possible values for this parameter refer to: man strftime
 #
 # Jan 1 13:05:59   
-{% if denyhosts_daemon_log_time_format is defined %}
 DAEMON_LOG_TIME_FORMAT = {{ denyhosts_daemon_log_time_format }}
-{% else %}
-#DAEMON_LOG_TIME_FORMAT = %b %d %H:%M:%S
-{% endif %}
 #
 # Jan 1 01:05:59 
 #DAEMON_LOG_TIME_FORMAT = %b %d %I:%M:%S
@@ -724,11 +600,7 @@ DAEMON_LOG_TIME_FORMAT = {{ denyhosts_daemon_log_time_format }}
 # http://docs.python.org/lib/node357.html
 #
 # This is the default:
-{% if denyhosts_daemon_log_message_format is defined %}
 DAEMON_LOG_MESSAGE_FORMAT = {{ denyhosts_daemon_log_message_format }}
-{% else %}
-#DAEMON_LOG_MESSAGE_FORMAT = %(asctime)s - %(name)-12s: %(levelname)-8s %(message)s
-{% endif %}
 #
 #
 ###################################################################### 
@@ -743,11 +615,7 @@ DAEMON_LOG_MESSAGE_FORMAT = {{ denyhosts_daemon_log_message_format }}
 # refer to:    http://denyhost.sourceforge.net/faq.html#timespec
 # 
 #
-{% if denyhosts_daemon_sleep is defined %}
 DAEMON_SLEEP = {{ denyhosts_daemon_sleep }}
-{% else %}
-DAEMON_SLEEP = 30s
-{% endif %}
 #
 #######################################################################
 
@@ -757,11 +625,7 @@ DAEMON_SLEEP = 30s
 # run the purge mechanism to expire old entries in HOSTS_DENY
 # This has no effect if PURGE_DENY is blank.
 #
-{% if denyhosts_daemon_purge is defined %}
 DAEMON_PURGE = {{ denyhosts_daemon_purge }}
-{% else %}
-DAEMON_PURGE = 1h
-{% endif %}
 #
 #######################################################################
 
@@ -823,16 +687,7 @@ SYNC_INTERVAL = {{ denyhosts_sync_interval }}
 # been uncommented.
 # The default is SYNC_UPLOAD = yes
 #
-{% if denyhosts_sync_upload is defined %}
-{%   if denyhosts_sync_upload %}
-SYNC_UPLOAD = yes
-{%   else %}
-SYNC_UPLOAD = no
-{%   endif %}
-{% else %}
-SYNC_UPLOAD = no
-{% endif %}
-#SYNC_UPLOAD = yes
+SYNC_UPLOAD = {{ denyhosts_sync_upload|upper }}
 #
 #######################################################################
 
@@ -844,16 +699,7 @@ SYNC_UPLOAD = no
 # been uncommented.
 # The default is SYNC_DOWNLOAD = yes
 #
-{% if denyhosts_sync_download is defined %}
-{%   if denyhosts_sync_download %}
-SYNC_DOWNLOAD = yes
-{%   else %}
-SYNC_DOWNLOAD = no
-{%   endif %}
-{% else %}
-SYNC_DOWNLOAD = no
-{% endif %}
-#SYNC_DOWNLOAD = yes
+SYNC_DOWNLOAD = {{ denyhosts_sync_download|upper }}
 #
 #
 #
