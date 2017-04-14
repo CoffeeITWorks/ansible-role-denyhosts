@@ -11,12 +11,15 @@
 - block:
     - name: Apply denyhosts configuration
       template:
-        src: denyhosts.conf.j2
-        dest: /etc/denyhosts.conf
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
         owner: root
         group: root
-        mode: 0600
+        mode: "{{ item.mode }}"
       notify: restart denyhosts
+      with_items:
+        - { src: allowed-hosts.j2, dest: /var/lib/denyhosts/allowed-hosts, mode: 0644 }
+        - { src: denyhosts.conf.j2, dest: /etc/denyhosts.conf, mode: 0600 }
 
     - name: Start the denyhosts service and enable on boot
       service:

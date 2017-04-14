@@ -1,0 +1,6 @@
+# We mustn't block localhost
+{% if denyhosts_allowed_hosts is defined %}
+{%   for allowed_host in denyhosts_allowed_hosts %}
+{{ allowed_host }}
+{%   endfor %}
+{% endif %} 

@@ -17,6 +17,8 @@ Available variables are listed below, along with default values:
     denyhosts_age_reset_restricted: 25d
     denyhosts_age_reset_root: 25d
     denyhosts_age_reset_valid: 5d
+    denyhosts_allowed_hosts:
+      - 127.0.0.1
     denyhosts_allowed_hosts_hostname_lookup: 'no'
     denyhosts_block_service: sshd
     denyhosts_daemon_log: /var/log/denyhosts
