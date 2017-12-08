@@ -1,6 +1,7 @@
 ---
 - name: restart denyhosts
   tags: denyhosts
+  become: true
   service:
     name: denyhosts
     state: restarted
