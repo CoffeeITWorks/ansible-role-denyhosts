@@ -19,7 +19,7 @@ Available variables are listed below, along with default values:
     denyhosts_age_reset_valid: 5d
     denyhosts_allowed_hosts:
       - 127.0.0.1
-    denyhosts_allowed_hosts_hostname_lookup: 'no'
+    denyhosts_allowed_hosts_hostname_lookup: False
     denyhosts_block_service: sshd
     denyhosts_daemon_log: /var/log/denyhosts
     denyhosts_daemon_log_message_format: '%(asctime)s - %(name)-12s: %(levelname)-8s %(message)s'
@@ -31,20 +31,20 @@ Available variables are listed below, along with default values:
     denyhosts_deny_threshold_root: 1
     denyhosts_deny_threshold_valid: 10
     denyhosts_etc_dir: /etc
-    denyhosts_hostname_lookup: 'no'
+    denyhosts_hostname_lookup: False
     denyhosts_hosts_deny: /etc/hosts.deny
     denyhosts_lock_file: /var/lock/subsys/denyhosts
     denyhosts_purge_deny: 4w 
-    denyhosts_reset_on_success: 'no'
+    denyhosts_reset_on_success: False
     denyhosts_secure_log: /var/log/secure
     denyhosts_smtp_from: 'DenyHosts <nobody@localhost>'
     denyhosts_smtp_host: localhost
     denyhosts_smtp_port: 25
     denyhosts_smtp_subject: 'DenyHosts Report from $[HOSTNAME]'
     denyhosts_suspicious_login_report_allowed_hosts: 'yes'
-    denyhosts_sync_download: 'no'
-    denyhosts_sync_upload: 'no'
-    denyhosts_syslog_report: 'no'
+    denyhosts_sync_download: True
+    denyhosts_sync_upload: True
+    denyhosts_syslog_report: False
     denyhosts_work_dir: /var/lib/denyhosts
 
 Additional variables not defined by default

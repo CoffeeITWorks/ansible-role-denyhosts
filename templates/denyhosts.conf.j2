@@ -185,7 +185,7 @@ ETC_DIR = {{ denyhosts_etc_dir }}
 # from allowed-hosts will not be reported.  All suspicious logins from 
 # ip addresses that are not in allowed-hosts will always be reported.
 #
-SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS={{ denyhosts_suspicious_login_report_allowed_hosts|upper }}
+SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS={{ 'YES' if denyhosts_suspicious_login_report_allowed_hosts is defined and denyhosts_suspicious_login_report_allowed_hosts else 'NO' }}
 ######################################################################
 
 ######################################################################
@@ -197,7 +197,7 @@ SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS={{ denyhosts_suspicious_login_report_allow
 # the corresponding hostname will be looked up and reported as well
 # (if available).
 #
-HOSTNAME_LOOKUP={{ denyhosts_hostname_lookup|upper }}
+HOSTNAME_LOOKUP={{ 'YES' if denyhosts_hostname_lookup is defined and denyhosts_hostname_lookup else 'NO' }}
 #
 ######################################################################
 
@@ -388,7 +388,7 @@ SMTP_DATE_FORMAT = {{ denyhosts_smtp_date_format }}
 # will be sent to syslog (syslog must be present on your system).
 # The default is: NO
 #
-SYSLOG_REPORT={{ denyhosts_syslog_report|upper }}
+SYSLOG_REPORT={{ 'YES' if denyhosts_syslog_report is defined and denyhosts_syslog_report else 'NO' }}
 #
 #SYSLOG_REPORT=YES
 #
@@ -404,7 +404,7 @@ SYSLOG_REPORT={{ denyhosts_syslog_report|upper }}
 # and sshd sometimes log hostnames in addition to ip addresses
 # then you may wish to specify this option.
 # 
-ALLOWED_HOSTS_HOSTNAME_LOOKUP={{ denyhosts_allowed_hosts_hostname_lookup|upper }}
+ALLOWED_HOSTS_HOSTNAME_LOOKUP={{ 'YES' if denyhosts_allowed_hosts_hostname_lookup is defined and denyhosts_allowed_hosts_hostname_lookup else 'NO' }}
 #
 ######################################################################
 
@@ -483,7 +483,7 @@ AGE_RESET_INVALID={{ denyhosts_age_reset_invalid }}
 #
 # The default is RESET_ON_SUCCESS = no
 #
-RESET_ON_SUCCESS = {{ denyhosts_reset_on_success|upper }}
+RESET_ON_SUCCESS = {{ 'YES' if denyhosts_reset_on_success is defined and denyhosts_reset_on_success else 'NO' }}
 #
 #####################################################################
 
@@ -687,7 +687,7 @@ SYNC_INTERVAL = {{ denyhosts_sync_interval }}
 # been uncommented.
 # The default is SYNC_UPLOAD = yes
 #
-SYNC_UPLOAD = {{ denyhosts_sync_upload|upper }}
+SYNC_UPLOAD = {{ 'YES' if denyhosts_sync_upload is defined and denyhosts_sync_upload else 'NO' }}
 #
 #######################################################################
 
@@ -699,7 +699,7 @@ SYNC_UPLOAD = {{ denyhosts_sync_upload|upper }}
 # been uncommented.
 # The default is SYNC_DOWNLOAD = yes
 #
-SYNC_DOWNLOAD = {{ denyhosts_sync_download|upper }}
+SYNC_DOWNLOAD = {{ 'YES' if denyhosts_sync_download is defined and denyhosts_sync_download else 'NO' }}
 #
 #
 #
