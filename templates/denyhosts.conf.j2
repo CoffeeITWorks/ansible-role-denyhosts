@@ -45,5 +45,7 @@ SYNC_INTERVAL = {{ denyhosts_sync_interval }}
 SYNC_SERVER = {{ denyhosts_sync_server }}
 SYNC_UPLOAD = {{ 'YES' if denyhosts_sync_upload|bool else 'NO' }}
 SYSLOG_REPORT={{ 'YES' if denyhosts_syslog_report|bool else 'NO' }}
+{% if denyhosts_userdef_failed_entry_regex|length > 0 %}
 USERDEF_FAILED_ENTRY_REGEX={{ denyhosts_userdef_failed_entry_regex }}
+{% endif %}
 WORK_DIR = {{ denyhosts_work_dir }}
