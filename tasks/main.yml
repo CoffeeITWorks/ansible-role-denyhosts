@@ -8,7 +8,7 @@
     state: present
   register: denyhosts_yum
 
-- name: Applying denyhosts configurations
+- name: Attempting to overlay denyhosts configurations
   tags: denyhosts
   become: true
   template:
