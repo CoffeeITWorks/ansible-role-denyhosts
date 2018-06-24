@@ -8,25 +8,27 @@
     state: present
   register: denyhosts_yum
 
-- block:
-    - name: Applying denyhosts configurations
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        owner: root
-        group: root
-        mode: "{{ item.mode }}"
-      notify: restart denyhosts
-      with_items:
-        - { src: allowed-hosts.j2, dest: /var/lib/denyhosts/allowed-hosts, mode: '0644' }
-        - { src: denyhosts.conf.j2, dest: /etc/denyhosts.conf, mode: '0600' }
-
-    - name: Enable and start the denyhosts service on boot
-      service:
-        enabled: yes
-        name: denyhosts
-        state: started
+- name: Applying denyhosts configurations
   tags: denyhosts
   become: true
-  when: denyhosts_yum|success
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  notify: restart denyhosts
+  with_items:
+    - { src: allowed-hosts.j2, dest: /var/lib/denyhosts/allowed-hosts, mode: '0644' }
+    - { src: denyhosts.conf.j2, dest: /etc/denyhosts.conf, mode: '0600' }
+  when: denyhosts_yum is success
+
+- name: Ensure that denyhosts is started and enabled on boot
+  tags: denyhosts
+  become: true
+  service:
+    enabled: yes
+    name: denyhosts
+    state: started
+  when: denyhosts_yum is success
 ...
