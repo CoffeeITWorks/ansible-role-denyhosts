@@ -3,7 +3,7 @@
   tags: denyhosts
   become: true
   yum:
-    enablerepo: epel
+    enablerepo: rpmforge
     name: denyhosts
     state: present
 
@@ -18,8 +18,8 @@
     mode: "{{ item.mode }}"
   notify: restart denyhosts
   loop:
-    - { src: allowed-hosts.j2, dst: /var/lib/denyhosts/allowed-hosts, mode: '0644' }
-    - { src: denyhosts.conf.j2, dst: /etc/denyhosts.conf, mode: '0600' }
+    - { src: allowed-hosts.j2, dst: "{{ denyhosts_work_dir }}/allowed-hosts", mode: '0644' }
+    - { src: denyhosts.cfg.j2, dst: /etc/denyhosts/denyhosts.cfg, mode: '0600' }
   loop_control:
     label: "{{ item.dst|basename }}"
 

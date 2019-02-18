@@ -8,9 +8,9 @@ RHEL/CentOS - SSH attack prevention
 
 ## Requirements
 
-This role requires that you have the epel repository installed.
+This role requires that you have the rpmforge repository installed.
 
- * https://galaxy.ansible.com/linuxhq/epel/
+ * https://galaxy.ansible.com/linuxhq/rpmforge/
 
 ## Role Variables
 
@@ -53,7 +53,7 @@ Available variables are listed below, along with default values:
     denyhosts_smtp_host: localhost
     denyhosts_smtp_password: ''
     denyhosts_smtp_port: 25
-    denyhosts_smtp_subject: 'DenyHosts Report from $[HOSTNAME]'
+    denyhosts_smtp_subject: "DenyHosts Report from {{ inventory_hostname }}"
     denyhosts_smtp_username: ''
     denyhosts_suspicious_login_report_allowed_hosts: true
     denyhosts_sync_download: true
@@ -64,7 +64,7 @@ Available variables are listed below, along with default values:
     denyhosts_sync_upload: true
     denyhosts_syslog_report: false
     denyhosts_userdef_failed_entry_regex: ''
-    denyhosts_work_dir: /var/lib/denyhosts
+    denyhosts_work_dir: /usr/share/denyhosts/data
 
 ## Dependencies
 

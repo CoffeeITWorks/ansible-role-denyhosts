@@ -36,7 +36,7 @@ denyhosts_smtp_from: 'DenyHosts <nobody@localhost>'
 denyhosts_smtp_host: localhost
 denyhosts_smtp_password: ''
 denyhosts_smtp_port: 25
-denyhosts_smtp_subject: 'DenyHosts Report from $[HOSTNAME]'
+denyhosts_smtp_subject: "DenyHosts Report from {{ inventory_hostname }}"
 denyhosts_smtp_username: ''
 denyhosts_suspicious_login_report_allowed_hosts: true
 denyhosts_sync_download: true
@@ -47,5 +47,5 @@ denyhosts_sync_server: http://xmlrpc.denyhosts.net:9911
 denyhosts_sync_upload: true
 denyhosts_syslog_report: false
 denyhosts_userdef_failed_entry_regex: ''
-denyhosts_work_dir: /var/lib/denyhosts
+denyhosts_work_dir: /usr/share/denyhosts/data
 ...
