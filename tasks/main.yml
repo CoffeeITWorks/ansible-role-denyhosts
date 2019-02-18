@@ -7,6 +7,18 @@
     name: denyhosts
     state: present
 
+- name: Attempting to overlay denyhosts work directories
+  tags: denyhosts
+  become: true
+  file:
+    group: root
+    mode: 0755
+    owner: root
+    path: "{{ denyhosts_work_dir }}"
+    recurse: true
+    state: directory
+  when: denyhosts_work_dir|length > 0
+
 - name: Attempting to overlay denyhosts configurations
   tags: denyhosts
   become: true
